@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>Android Remote Locator</title>
+    <link rel="stylesheet" href="static/style.css" />
+    <script src="static/jquery-1.8.2.min.js"></script>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <div id="account">
+          <a href="{{.urlLogin}}">{{if .user}} {{.i18n.Hello}} {{.user}}<br />{{.i18n.Logout}}{{else}}{{.i18n.Login}}{{end}}</a>
+        </div>
+        <h1>Android Remote Locator</h1>
+        <div id="menu">
+            <ul>
+              <li><a href="/">{{.i18n.Home}}</a></li>
+              {{if .user}}
+              <li><a href="/phones">{{.i18n.Phone}}</a></li>
+              {{end}}
+              <li><a href="/tos">{{.i18n.TOS}}</a></li>
+              <li><a href="/faq">{{.i18n.FAQ}}</a></li>
+              <!--<li><a href="/contact">{{.i18n.Contact}}</a></li>-->
+            </ul>
+        </div>
+      </div>
+      <div id="error"></div>
+      <div id="content">{{template "Content"}}</div>
+      <div id="footer"><span>&copy; Grigis Gaetan - <a href="http://blog.gaetan-grigis.eu" target="_blank">LoupZeur</a> All right reserved</span></div>
+    </div>
+  </body>
+</html>
+
+

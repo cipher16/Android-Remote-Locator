@@ -1,0 +1,110 @@
+/*Palette : http://www.colourlovers.com/palette/444487/Curiosity_Killed*/
+* {
+  font-family: sans-serif;
+  color: #FFF;
+}
+button,input {
+  color: #000;  
+}
+#header > h1, #content > div, #footer > span {
+  color: #FFF;
+  text-align: justify;
+}
+
+a {
+  color: #EFFFCD !important;
+  text-decoration: none;
+}
+
+a:focus,a:hover,a:active{
+  text-decoration: none !important;
+  background-color: #2E2633;
+}
+
+body {
+  background: none repeat scroll 0 0 #EFFFCD !important;
+}
+
+
+#page {
+  margin: 0 auto;
+  width: 80%;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  background-color: #2E2633;
+  padding-bottom: 15px;
+}
+
+#header {
+  border-bottom: 2px solid #99173C;
+  margin-bottom: 15px;
+}
+
+#header > h1 {
+  padding: 15px 15px 0px 15px;  
+}
+
+#account {
+  float: right;
+  font-size: 10px;
+  text-align:right;
+  padding-top: 5px;
+  padding-right: 5px;
+}
+
+#menu {
+  background-color: #555152;
+  height: 33px;
+  position:relative;
+}
+
+#menu ul li {
+  display: inline-block;
+}
+#menu ul {
+  margin-top: 0px;
+  padding-left: 5px;
+}
+
+#menu a {
+  padding: 8 5 6 5;
+  display: block;
+}
+  
+#footer {
+  margin-top:15px;
+  background-color: #99173C;
+  font-size: 10px;
+  font-style: italic;
+  color: #555152;
+  text-align: center;
+}
+
+#flags {
+  position: absolute;
+  right: 10px;
+}
+
+#content {
+  margin: 10px;
+  min-height: 75%;
+}
+
+#error {
+  background-color:#99173C;
+  border: 1px solid #EFFFCD;
+  padding: 20 20 0 20;
+  color:#FFF;
+  display: none;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+dl {
+  margin-left: 20px;  
+}
+dl > dt {
+  font-weight: bolder;
+  margin-top: 20px;
+}

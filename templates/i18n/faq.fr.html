@@ -1,0 +1,24 @@
+{{define "Content"}}
+<div>Some Frequently Asked Questions (none were really asked ;)) <br>
+
+ Remember that this service is still in active development, so it can be really instable (we are using alpha and beta tech from google, so the service can be stopped anytime). 
+
+	<dl> 
+		<dt>Q: Does it polls the server continuously ?</dt>
+		<dd>A: No, thanks to C2DM, it will only send data to the server when asked by refreshing data. So there is no uneeded connection and data fees.</dd>
+
+		<dt>Q: What kind of data are stored by this service ?</dt>
+		<dd>A: For the moment all stored data can be seen in the phone tab (geoloc and status), and the registration id given by google for the C2DM messaging system</dd>
+
+		<dt>Q: Can I delete all data that my phone has uploaded ?</dt>
+		<dd>A: Not for the moment, it will be available soon</dd>
+
+		<dt>Q: What if my phone is lost, and the GPS/the phone doesn't respond ?</dt>
+		<dd>A: I don't know ... I did my best, but if the battery is down, or the phone has been wiped, you can't do anything with this software</dd>
+
+		<dt>Q: What if I found a bug ?</dt> <dd>A: Please report it <a href="https://github.com/cipher16/RCBackUpAndWipeWeb/issues" target="_blank">here</a></dd>
+		<dt>Q: What if I'm unable to delete the software ?</dt>
+		<dd>A: The software is installed as a 'device administrator', so you must remove the administration rights of the application before being able to remove it. To remove the administrator right of the app : go to Settings, then Location and Security, then Device administrators and deselect RCBU</dd>
+	</dl>
+</div>
+{{end}}
