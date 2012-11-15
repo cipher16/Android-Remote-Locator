@@ -9,26 +9,34 @@ import (
 
 //ici on définit les pages !!!
 func pages(w http.ResponseWriter, r *http.Request) {
-	user, url := getLoginData(r)
 	lang := getHeaderLang(r)
 	page := r.URL.Path
-
-	content := map[string]interface{}{
-		"i18n":     i18n[lang],
-		"user":     user,
-		"urlLogin": url,
-	}
-
-	ctmpl := "templates/i18n/home." + lang + ".html"
+	user, url, context := getLoginData(r)
+	//url switch
+	ctmpl := "templates/i18n/notfound." + lang + ".html"
 	switch page {
+	case "/gcm":
+		GCM(context, w, r)
+		return
 	case "/phones":
-		ctmpl = "templates/i18n/phone." + lang + ".html"
+		Phones(w, r, lang, user, context, url)
+		return
+		//		ctmpl = "templates/i18n/phone." + lang + ".html"
 	case "/tos":
 		ctmpl = "templates/i18n/tos." + lang + ".html"
 	case "/faq":
 		ctmpl = "templates/i18n/faq." + lang + ".html"
+	case "/":
+		ctmpl = "templates/i18n/home." + lang + ".html"
 		/*case "/contact":
 		ctmpl = "templates/i18n/contact." + lang + ".html"*/
+	}
+
+	content := map[string]interface{}{
+		"i18n":        i18n[lang],
+		"user":        user,
+		"urlLogin":    url,
+		"currentpage": page,
 	}
 
 	Tmpl := template.Must(template.ParseFiles("templates/base.html", ctmpl))
@@ -37,7 +45,7 @@ func pages(w http.ResponseWriter, r *http.Request) {
 
 /*Les funcs des pages*/
 
-func getLoginData(r *http.Request) (*user.User, string) {
+func getLoginData(r *http.Request) (*user.User, string, appengine.Context) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
 
@@ -48,5 +56,5 @@ func getLoginData(r *http.Request) (*user.User, string) {
 	} else {
 		url, _ = user.LogoutURL(c, "/")
 	}
-	return u, url
+	return u, url, c
 }

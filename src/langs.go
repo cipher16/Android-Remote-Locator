@@ -10,6 +10,7 @@ import (
 */
 var i18n = map[string](map[string]string){
 	"fr": {
+		//General
 		"Home":    "Accueil",
 		"Hello":   "Bonjour",
 		"Contact": "Contact",
@@ -18,8 +19,14 @@ var i18n = map[string](map[string]string){
 		"TOS":     "Condition d'utilisation",
 		"Login":   "Se logguer",
 		"Logout":  "Se déconnecter",
+		//phone page
+		"Informations": "Informations",
+		"Ring":         "Faire sonner",
+		"Geol":         "Géolocaliser",
+		"Lock":         "Bloquer",
 	},
 	"en": {
+		//General
 		"Home":    "Home",
 		"Hello":   "Hi",
 		"Phone":   "Phone(s)",
@@ -28,6 +35,11 @@ var i18n = map[string](map[string]string){
 		"Contact": "Contact",
 		"Login":   "Log in",
 		"Logout":  "Log out",
+		//phone part
+		"Informations": "Informations",
+		"Ring":         "Ring it",
+		"Geol":         "Géolocaliser",
+		"Lock":         "Lock it",
 	},
 }
 
