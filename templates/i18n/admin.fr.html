@@ -1,0 +1,22 @@
+{{define "Content"}}
+	{{if .isAdmin}}
+		<h2>Ajouter une nouvelle clé API</h2>
+		L'application prend toujours la dernière clé enregistrée : <br />
+		<form method="POST" action="/apiKeyStore">
+			Nouvelle Clé : <input type="text" name="key" style='width:350px' />
+			<input type="submit" value="Enregistrer" />
+		</form>
+		{{if .ApiKey}}
+			La dernière clé en utilisation est : <b>{{.ApiKey}}</b>
+		{{else}}
+			Vous n'avez pas de clé, veuillez en spécifié une.
+			Nécessaire, si vous voulez envoyer des commandes au téléphones
+		{{end}}
+
+		<h2>Envoyer une commande</h2>
+		Veuillez choisir ....
+
+		<h2>Envoyer une notification</h2>
+
+	{{end}}
+{{end}}

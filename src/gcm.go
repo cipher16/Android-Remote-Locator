@@ -8,7 +8,8 @@ import (
 	"net/http"
 )
 
-func GCM(c appengine.Context, w http.ResponseWriter, r *http.Request) {
+func GCM(w http.ResponseWriter, r *http.Request) {
+	_, c := getDefaultVar(r)
 	if r.Method == "GET" {
 
 		switch r.URL.Query().Get("action") {
@@ -16,6 +17,7 @@ func GCM(c appengine.Context, w http.ResponseWriter, r *http.Request) {
 			w.Header().Add("content-type", "text/html")
 			fmt.Fprintf(w,
 				"Sending a GCM : <br /><form method='post'>"+
+					"<textarea name='key'></textarea><br />"+
 					"<textarea name='message'></textarea><br />"+
 					"<input type='submit' value='SubMeat' />"+
 					"</form>")
@@ -29,14 +31,12 @@ func GCM(c appengine.Context, w http.ResponseWriter, r *http.Request) {
 					"</form>")
 		}
 
-	} else {
+	} else { //POST action
 		switch r.URL.Query().Get("action") {
 		case "send":
-			SendGCM(
-				"",
-				r.FormValue("message"), "0", c)
+			SendGCM(r.FormValue("key"), r.FormValue("message"), "0", c)
 			w.Header().Add("content-type", "text/html")
-			fmt.Fprintf(w, "Sending an SOS to the world!!!!!!")
+			fmt.Fprintf(w, "Sending "+r.FormValue("message")+" to : "+r.FormValue("key"))
 		default:
 			w.Header().Add("content-type", "text/html")
 
@@ -55,8 +55,8 @@ func GCM(c appengine.Context, w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func SendGCM(device_id string, data string, collapse string, context appengine.Context) bool {
-	client := gcm.New("")
+func SendGCM(device_id string, data string, collapse string, context *appengine.Context) bool {
+	client := gcm.New(getLastStoredKey(context))
 
 	load := gcm.NewMessage(device_id)
 	load.SetPayload("message", data)

@@ -7,54 +7,56 @@ import (
 	"net/http"
 )
 
-//ici on définit les pages !!!
+//ici on définit les pages statics!!!
 func pages(w http.ResponseWriter, r *http.Request) {
-	lang := getHeaderLang(r)
-	page := r.URL.Path
-	user, url, context := getLoginData(r)
-	//url switch
-	ctmpl := "templates/i18n/notfound." + lang + ".html"
-	switch page {
-	case "/gcm":
-		GCM(context, w, r)
-		return
-	case "/phones":
-		Phones(w, r, lang, user, context, url)
-		return
-		//		ctmpl = "templates/i18n/phone." + lang + ".html"
+	content, _ := getDefaultVar(r)
+	lang := content["lang"].(string)
+	//url for static pages switch
+	ctmpl := "notfound"
+	switch content["currentpage"] {
 	case "/tos":
-		ctmpl = "templates/i18n/tos." + lang + ".html"
+		ctmpl = "tos"
 	case "/faq":
-		ctmpl = "templates/i18n/faq." + lang + ".html"
+		ctmpl = "faq"
 	case "/":
-		ctmpl = "templates/i18n/home." + lang + ".html"
-		/*case "/contact":
-		ctmpl = "templates/i18n/contact." + lang + ".html"*/
+		ctmpl = "home"
 	}
-
-	content := map[string]interface{}{
-		"i18n":        i18n[lang],
-		"user":        user,
-		"urlLogin":    url,
-		"currentpage": page,
-	}
-
-	Tmpl := template.Must(template.ParseFiles("templates/base.html", ctmpl))
+	Tmpl := template.Must(template.ParseFiles(
+		TEMPLATE+"/base.html",
+		TEMPLATE_I18N+"/"+ctmpl+"."+lang+".html"))
 	Tmpl.Execute(w, content)
 }
 
-/*Les funcs des pages*/
-
-func getLoginData(r *http.Request) (*user.User, string, appengine.Context) {
+/*Genere les données de login*/
+func getLoginData(r *http.Request) (*user.User, string, *appengine.Context) {
 	c := appengine.NewContext(r)
 	u := user.Current(c)
-
 	url := ""
-
 	if u == nil {
 		url, _ = user.LoginURL(c, "/")
 	} else {
 		url, _ = user.LogoutURL(c, "/")
 	}
-	return u, url, c
+	return u, url, &c
+}
+
+/*Recupere la lang, le user, le context, l'url, etc*/
+func getDefaultVar(r *http.Request) (map[string]interface{}, *appengine.Context) {
+	lang := getHeaderLang(r)
+	page := r.URL.Path
+	user, url, context := getLoginData(r)
+	isAdmin := ""
+	if user != nil && user.Admin {
+		isAdmin = "true"
+	}
+
+	content := map[string]interface{}{
+		"lang":        lang,
+		"i18n":        i18n[lang],
+		"user":        user,
+		"urlLogin":    url,
+		"currentpage": page,
+		"isAdmin":     isAdmin,
+	}
+	return content, context
 }

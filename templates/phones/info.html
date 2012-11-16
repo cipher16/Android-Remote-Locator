@@ -1,0 +1,12 @@
+{{define "DataDisplay"}}
+	<div>
+		Les derniers status retourné par votre téléphone : 
+		<ul>
+			{{range .data}}
+				<li>{{.Date}}<br />{{.Data}}</li>
+			{{else}}
+				<li>Pas encore de données</li>
+	    	{{end}}
+		</ul>
+	</div>
+{{end}}

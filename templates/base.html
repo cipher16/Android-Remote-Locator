@@ -15,11 +15,13 @@
             <ul>
               <li><a href="/">{{.i18n.Home}}</a></li>
               {{if .user}}
-              <li><a href="/phones">{{.i18n.Phone}}</a></li>
+                <li><a href="/phones">{{.i18n.Phone}}</a></li>
+              {{end}}
+              {{if .isAdmin}}
+                <li><a href="/admin">{{.i18n.Admin}}</a></li>
               {{end}}
               <li><a href="/tos">{{.i18n.TOS}}</a></li>
               <li><a href="/faq">{{.i18n.FAQ}}</a></li>
-              <!--<li><a href="/contact">{{.i18n.Contact}}</a></li>-->
             </ul>
         </div>
       </div>

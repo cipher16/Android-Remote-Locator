@@ -1,21 +1,35 @@
 package src
 
 import (
-	"appengine"
 	"appengine/user"
 	"html/template"
 	"net/http"
 )
 
-func Phones(w http.ResponseWriter, r *http.Request, lang string, user *user.User, context appengine.Context, url string) {
-	page := r.URL.Path
-	content := map[string]interface{}{
-		"i18n":        i18n[lang],
-		"user":        user,
-		"urlLogin":    url,
-		"currentpage": page,
-	}
+func phones(w http.ResponseWriter, r *http.Request) {
+	content, context := getDefaultVar(r)
 	ctmpl := "templates/phones.html"
-	Tmpl := template.Must(template.ParseFiles("templates/base.html", ctmpl))
+	atmpl := ""
+
+	if content["user"] == nil {
+		http.Redirect(w, r, "/", http.StatusMovedPermanently)
+		return
+	}
+
+	switch r.URL.Query().Get("a") {
+	case "geol":
+		atmpl = "templates/phones/info.html"
+		Data := get10LastType("geoloc", (content["user"].(*user.User)).Email, context)
+		content["data"] = Data
+	case "ring":
+	case "block":
+	default:
+		atmpl = "templates/phones/info.html"
+		Data := get10LastType("status", (content["user"].(*user.User)).Email, context)
+		content["data"] = Data
+
+	}
+
+	Tmpl := template.Must(template.ParseFiles("templates/base.html", ctmpl, atmpl))
 	Tmpl.Execute(w, content)
 }
