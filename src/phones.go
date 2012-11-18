@@ -18,14 +18,14 @@ func phones(w http.ResponseWriter, r *http.Request) {
 
 	switch r.URL.Query().Get("a") {
 	case "geol":
-		atmpl = "templates/phones/info.html"
-		Data := get10LastType("geoloc", (content["user"].(*user.User)).Email, context)
+		atmpl = "templates/phones/geo.html"
+		Data := get10LastType("GEOLOC", (content["user"].(*user.User)).Email, context)
 		content["data"] = Data
 	case "ring":
 	case "block":
 	default:
 		atmpl = "templates/phones/info.html"
-		Data := get10LastType("status", (content["user"].(*user.User)).Email, context)
+		Data := get10LastType("STATUS", (content["user"].(*user.User)).Email, context)
 		content["data"] = Data
 
 	}

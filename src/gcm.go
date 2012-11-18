@@ -34,7 +34,7 @@ func GCM(w http.ResponseWriter, r *http.Request) {
 	} else { //POST action
 		switch r.URL.Query().Get("action") {
 		case "send":
-			SendGCM(r.FormValue("key"), r.FormValue("message"), "0", c)
+			SendGCM(r.FormValue("key"), map[string]string{"action": r.FormValue("message")}, "0", c)
 			w.Header().Add("content-type", "text/html")
 			fmt.Fprintf(w, "Sending "+r.FormValue("message")+" to : "+r.FormValue("key"))
 		default:
@@ -55,11 +55,13 @@ func GCM(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func SendGCM(device_id string, data string, collapse string, context *appengine.Context) bool {
+func SendGCM(device_id string, data map[string]string, collapse string, context *appengine.Context) bool {
 	client := gcm.New(getLastStoredKey(context))
 
 	load := gcm.NewMessage(device_id)
-	load.SetPayload("message", data)
+	for k, v := range data {
+		load.SetPayload(k, v)
+	}
 	load.CollapseKey = collapse
 	load.DelayWhileIdle = true
 	load.TimeToLive = 10

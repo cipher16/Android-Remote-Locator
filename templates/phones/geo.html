@@ -1,12 +1,12 @@
 {{define "DataDisplay"}}
 	<div>
-		<h3>Les derniers status retournés par votre téléphone : </h3>
+		<h3>Les dernieres positions géographiques retournés par votre téléphone : </h3>
 		<ul>
 			{{range .data}}
 				<li>{{.Date}}<br />
 					<ul>
 						{{range $k,$v := .Data}}<li><b>{{$k}} :</b> {{$v}}</li>{{end}}
-					</ul>
+					<ul>
 				</li>
 			{{else}}
 				<li>Pas encore de données</li>
